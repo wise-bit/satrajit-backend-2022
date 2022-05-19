@@ -1,12 +1,12 @@
 create table warehouses (
   id serial primary key,
-  name text,
-  price integer
+  name varchar(100),
+  address varchar(100)
 );
 
 create table items (
   id serial primary key,
-  warehouse_id integer references warehouse(id),
-  name text,
+  warehouse_id integer references warehouses(id),
+  name varchar(100),
   price integer
 );
