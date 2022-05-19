@@ -3,7 +3,7 @@ const app = express();
 var pg = require('pg');
 const dotenv = require('dotenv');
 
-const port = 4000;
+const port = process.env.PORT || 3000;
 
 dotenv.config({ path: ".env" });
 const key = process.env.ELEPHANTSQL_URL;
