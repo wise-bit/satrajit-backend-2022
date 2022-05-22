@@ -2,8 +2,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-// db
-var pg = require('pg');
 // system
 const dotenv = require('dotenv');
 // project
