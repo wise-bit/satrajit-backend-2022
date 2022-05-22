@@ -9,7 +9,7 @@ const db = require('./queries');
 
 dotenv.config({ path: '.env' });
 
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 8080;
 
 app.use(bodyParser.json());
 app.use(
@@ -20,7 +20,7 @@ app.use(
 
 app.use(express.urlencoded({ extended: false }));
 
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
   res.send(
     "Satrajit's application for Shopify Backend Developer Intern\n" +
       '(Find out more about me at satrajit.ca)'
@@ -35,12 +35,15 @@ app.get('/warehouses/:id', db.getItemsByWarehouseId);
 
 // POST endpoints
 app.post('/items', db.createItem);
+app.post('/warehouses', db.createWarehouse);
 
 // PUT endpoints
 app.put('/items/:id', db.updateItem);
+app.put('/warehouses/:id', db.updateWarehouse);
 
 // DELETE endpoints
 app.delete('/items/:id', db.deleteItem);
+app.delete('/warehouses/:id', db.deleteWarehouse);
 
 // Listener
 app.listen(port, () => {

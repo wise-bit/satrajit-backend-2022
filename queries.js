@@ -4,7 +4,6 @@ const dotenv = require('dotenv');
 const Pool = require('pg').Pool;
 
 dotenv.config({ path: '.env' });
-
 const pool = new Pool({
   user: process.env.SQL_USER,
   host: process.env.SQL_HOST,
@@ -19,7 +18,7 @@ const pool = new Pool({
 const getAllItems = (_req, res) => {
   pool.query('select * from items order by id asc', (error, results) => {
     if (error) {
-      throw error;
+      res.status(500).send(handleErrorMessage(error));
     }
     res.status(200).json(results.rows);
   });
@@ -31,7 +30,7 @@ const getAllItems = (_req, res) => {
 const getAllWarehouses = (_req, res) => {
   pool.query('select * from warehouses order by id asc', (error, results) => {
     if (error) {
-      throw error;
+      res.status(500).send(handleErrorMessage(error));
     }
     res.status(200).json(results.rows);
   });
@@ -47,7 +46,7 @@ const getItemById = (req, res) => {
 
   pool.query(sql, [id], (error, results) => {
     if (error) {
-      throw error;
+      res.status(500).send(handleErrorMessage(error));
     }
     res.status(200).json(results.rows);
   });
@@ -67,7 +66,7 @@ const getItemsByWarehouseId = (req, res) => {
 
   pool.query(sql, [id], (error, results) => {
     if (error) {
-      throw error;
+      res.status(500).send(handleErrorMessage(error));
     }
     res.status(200).json(results.rows);
   });
@@ -87,14 +86,35 @@ const createItem = (req, res) => {
 
   pool.query(sql, [warehouse, name, price], (error, results) => {
     if (error) {
-      if (error.code === '23503') {
-        res.status(400).send('Invalid warehouse ID');
-      }
+      res.status(500).send(handleErrorMessage(error));
+    }
+    // TODO add uniqueuess check
+    res.status(201).send(`Item ID: ${results.rows[0].itemid} inserted`);
+  });
+};
+
+/**
+ *
+ */
+const createWarehouse = (req, res) => {
+  const { name, address } = req.body;
+  console.log(req.body);
+
+  const sql =
+    'insert into warehouses (id, name, address)\n' +
+    'values (DEFAULT, $1, $2)\n' +
+    'returning id as warehouseid';
+
+  pool.query(sql, [name, address], (error, results) => {
+    if (error) {
+      res.status(500).send(handleErrorMessage(error));
     }
 
     // TODO add uniqueuess check
 
-    res.status(201).send(`Item ID: ${results.rows[0].itemid} inserted`);
+    res
+      .status(201)
+      .send(`Warehouse ID: ${results.rows[0].warehouseid} inserted`);
   });
 };
 
@@ -113,9 +133,30 @@ const updateItem = (req, res) => {
 
   pool.query(sql, [warehouse, name, price, id], (error, results) => {
     if (error) {
-      throw error;
+      res.status(500).send(handleErrorMessage(error));
     }
     res.status(200).send(`Item ID: ${results.rows[0].itemid} updated`);
+  });
+};
+
+/**
+ *
+ */
+const updateWarehouse = (req, res) => {
+  const id = parseInt(req.params.id);
+  const { name, address } = req.body;
+
+  const sql =
+    'update items\n' +
+    'set name = $1, address = $2\n' +
+    'where id = $3\n' +
+    'returning id as itemid';
+
+  pool.query(sql, [name, address, id], (error, results) => {
+    if (error) {
+      res.status(500).send(handleErrorMessage(error));
+    }
+    res.status(200).send(`Warehouse ID: ${results.rows[0].itemid} updated`);
   });
 };
 
@@ -129,7 +170,7 @@ const deleteItem = (req, res) => {
 
   pool.query(sql, [id], (error, results) => {
     if (error) {
-      throw error;
+      res.status(500).send(handleErrorMessage(error));
     }
     res.status(200).send(`Item ID: ${results.rows[0].itemid} deleted`);
   });
@@ -138,8 +179,29 @@ const deleteItem = (req, res) => {
 /**
  *
  */
+const deleteWarehouse = (req, res) => {
+  const id = parseInt(req.params.id);
+
+  const sql =
+    'delete from warehouses where id = $1 returning id as warehouseid';
+
+  pool.query(sql, [id], (error, results) => {
+    if (error) {
+      res.status(500).send(handleErrorMessage(error));
+    }
+    res.status(200).send(`Warehouse ID: ${results.rows[0].warehouseid} deleted`);
+  });
+};
+
+/**
+ *
+ */
 const handleErrorMessage = () => {
-  return 'Unexpected error occured.';
+  if (error.code === '23503') {
+    return 'Invalid warehouse ID';
+  } else {
+    return 'Unexpected error occurred';
+  }
 };
 
 module.exports = {
@@ -148,6 +210,9 @@ module.exports = {
   getItemById,
   getItemsByWarehouseId,
   createItem,
+  createWarehouse,
   updateItem,
+  updateWarehouse,
   deleteItem,
+  deleteWarehouse,
 };
