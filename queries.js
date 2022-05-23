@@ -14,19 +14,21 @@ const pool = new Pool({
 
 const getAllItems = (_req, res) => {
   pool.query('select * from items order by id asc', (error, results) => {
-    if (error) {
+    if (error || results?.rows?.length == 0) {
       res.status(500).send(handleErrorMessage(error));
+    } else {
+      res.status(200).json(results.rows);
     }
-    res.status(200).json(results.rows);
   });
 };
 
 const getAllWarehouses = (_req, res) => {
   pool.query('select * from warehouses order by id asc', (error, results) => {
-    if (error) {
+    if (error || results?.rows?.length == 0) {
       res.status(500).send(handleErrorMessage(error));
+    } else {
+      res.status(200).json(results.rows);
     }
-    res.status(200).json(results.rows);
   });
 };
 
@@ -36,10 +38,11 @@ const getItemById = (req, res) => {
   const sql = 'select * from items where id = $1';
 
   pool.query(sql, [id], (error, results) => {
-    if (error) {
+    if (error || results?.rows?.length == 0) {
       res.status(500).send(handleErrorMessage(error));
+    } else {
+      res.status(200).json(results.rows);
     }
-    res.status(200).json(results.rows);
   });
 };
 
@@ -53,10 +56,11 @@ const getItemsByWarehouseId = (req, res) => {
     'where w.id = $1';
 
   pool.query(sql, [id], (error, results) => {
-    if (error) {
+    if (error || results?.rows?.length == 0) {
       res.status(500).send(handleErrorMessage(error));
+    } else {
+      res.status(200).json(results.rows);
     }
-    res.status(200).json(results.rows);
   });
 };
 
@@ -70,10 +74,11 @@ const createItem = (req, res) => {
     'returning id as itemid';
 
   pool.query(sql, [warehouse, name, price], (error, results) => {
-    if (error) {
+    if (error || results?.rows?.length == 0) {
       res.status(500).send(handleErrorMessage(error));
+    } else {
+      res.status(201).send(`Item ID: ${results.rows[0].itemid} inserted`);
     }
-    res.status(201).send(`Item ID: ${results.rows[0].itemid} inserted`);
   });
 };
 
@@ -87,12 +92,13 @@ const createWarehouse = (req, res) => {
     'returning id as warehouseid';
 
   pool.query(sql, [name, address], (error, results) => {
-    if (error) {
+    if (error || results?.rows?.length == 0) {
       res.status(500).send(handleErrorMessage(error));
+    } else {
+      res
+        .status(201)
+        .send(`Warehouse ID: ${results.rows[0].warehouseid} inserted`);
     }
-    res
-      .status(201)
-      .send(`Warehouse ID: ${results.rows[0].warehouseid} inserted`);
   });
 };
 
@@ -107,10 +113,11 @@ const updateItem = (req, res) => {
     'returning id as itemid';
 
   pool.query(sql, [warehouse, name, price, id], (error, results) => {
-    if (error) {
+    if (error || results?.rows?.length == 0) {
       res.status(500).send(handleErrorMessage(error));
+    } else {
+      res.status(200).send(`Item ID: ${results.rows[0].itemid} updated`);
     }
-    res.status(200).send(`Item ID: ${results.rows[0].itemid} updated`);
   });
 };
 
@@ -125,10 +132,11 @@ const updateWarehouse = (req, res) => {
     'returning id as itemid';
 
   pool.query(sql, [name, address, id], (error, results) => {
-    if (error) {
+    if (error || results?.rows?.length == 0) {
       res.status(500).send(handleErrorMessage(error));
+    } else {
+      res.status(200).send(`Warehouse ID: ${results.rows[0].itemid} updated`);
     }
-    res.status(200).send(`Warehouse ID: ${results.rows[0].itemid} updated`);
   });
 };
 
@@ -138,10 +146,11 @@ const deleteItem = (req, res) => {
   const sql = 'delete from items where id = $1 returning id as itemid';
 
   pool.query(sql, [id], (error, results) => {
-    if (error) {
+    if (error || results?.rows?.length == 0) {
       res.status(500).send(handleErrorMessage(error));
+    } else {
+      res.status(200).send(`Item ID: ${results.rows[0].itemid} deleted`);
     }
-    res.status(200).send(`Item ID: ${results.rows[0].itemid} deleted`);
   });
 };
 
@@ -152,17 +161,18 @@ const deleteWarehouse = (req, res) => {
     'delete from warehouses where id = $1 returning id as warehouseid';
 
   pool.query(sql, [id], (error, results) => {
-    if (error) {
+    if (error || results?.rows?.length == 0) {
       res.status(500).send(handleErrorMessage(error));
+    } else {
+      res
+        .status(200)
+        .send(`Warehouse ID: ${results.rows[0].warehouseid} deleted`);
     }
-    res
-      .status(200)
-      .send(`Warehouse ID: ${results.rows[0].warehouseid} deleted`);
   });
 };
 
 const handleErrorMessage = (error) => {
-  if (error.code === '23503') {
+  if (error?.code === '23503') {
     return 'Invalid warehouse ID';
   } else {
     return 'Unexpected error occurred';
