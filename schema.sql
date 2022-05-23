@@ -8,5 +8,5 @@ create table items (
   id serial primary key,
   warehouse_id integer references warehouses(id),
   name varchar(100) unique not null,
-  price integer not null
+  price decimal not null
 );
