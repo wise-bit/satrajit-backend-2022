@@ -12,9 +12,6 @@ const pool = new Pool({
   port: 5432,
 });
 
-/**
- *
- */
 const getAllItems = (_req, res) => {
   pool.query('select * from items order by id asc', (error, results) => {
     if (error) {
@@ -24,9 +21,6 @@ const getAllItems = (_req, res) => {
   });
 };
 
-/**
- *
- */
 const getAllWarehouses = (_req, res) => {
   pool.query('select * from warehouses order by id asc', (error, results) => {
     if (error) {
@@ -36,9 +30,6 @@ const getAllWarehouses = (_req, res) => {
   });
 };
 
-/**
- *
- */
 const getItemById = (req, res) => {
   const id = parseInt(req.params.id);
 
@@ -52,9 +43,6 @@ const getItemById = (req, res) => {
   });
 };
 
-/**
- *
- */
 const getItemsByWarehouseId = (req, res) => {
   const id = parseInt(req.params.id);
 
@@ -72,9 +60,6 @@ const getItemsByWarehouseId = (req, res) => {
   });
 };
 
-/**
- *
- */
 const createItem = (req, res) => {
   const { warehouse, name, price } = req.body;
   console.log(req.body);
@@ -88,14 +73,10 @@ const createItem = (req, res) => {
     if (error) {
       res.status(500).send(handleErrorMessage(error));
     }
-    // TODO add uniqueuess check
     res.status(201).send(`Item ID: ${results.rows[0].itemid} inserted`);
   });
 };
 
-/**
- *
- */
 const createWarehouse = (req, res) => {
   const { name, address } = req.body;
   console.log(req.body);
@@ -109,18 +90,12 @@ const createWarehouse = (req, res) => {
     if (error) {
       res.status(500).send(handleErrorMessage(error));
     }
-
-    // TODO add uniqueuess check
-
     res
       .status(201)
       .send(`Warehouse ID: ${results.rows[0].warehouseid} inserted`);
   });
 };
 
-/**
- *
- */
 const updateItem = (req, res) => {
   const id = parseInt(req.params.id);
   const { warehouse, name, price } = req.body;
@@ -139,9 +114,6 @@ const updateItem = (req, res) => {
   });
 };
 
-/**
- *
- */
 const updateWarehouse = (req, res) => {
   const id = parseInt(req.params.id);
   const { name, address } = req.body;
@@ -160,9 +132,6 @@ const updateWarehouse = (req, res) => {
   });
 };
 
-/**
- *
- */
 const deleteItem = (req, res) => {
   const id = parseInt(req.params.id);
 
@@ -176,9 +145,6 @@ const deleteItem = (req, res) => {
   });
 };
 
-/**
- *
- */
 const deleteWarehouse = (req, res) => {
   const id = parseInt(req.params.id);
 
@@ -189,14 +155,13 @@ const deleteWarehouse = (req, res) => {
     if (error) {
       res.status(500).send(handleErrorMessage(error));
     }
-    res.status(200).send(`Warehouse ID: ${results.rows[0].warehouseid} deleted`);
+    res
+      .status(200)
+      .send(`Warehouse ID: ${results.rows[0].warehouseid} deleted`);
   });
 };
 
-/**
- *
- */
-const handleErrorMessage = () => {
+const handleErrorMessage = (error) => {
   if (error.code === '23503') {
     return 'Invalid warehouse ID';
   } else {
