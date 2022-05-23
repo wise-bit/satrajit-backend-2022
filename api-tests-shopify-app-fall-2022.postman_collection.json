@@ -1,0 +1,239 @@
+{
+	"info": {
+		"_postman_id": "330873b0-ca62-4dac-96cf-c2e7c7ff7586",
+		"name": "api-tests-shopify-app-fall-2022",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11288342"
+	},
+	"item": [
+		{
+			"name": "all items get test",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://satrajit-shopify-challenge-22.herokuapp.com/items",
+					"protocol": "https",
+					"host": [
+						"satrajit-shopify-challenge-22",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "all warehouses get test",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://satrajit-shopify-challenge-22.herokuapp.com/warehouses",
+					"protocol": "https",
+					"host": [
+						"satrajit-shopify-challenge-22",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"warehouses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "item by id get test",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://satrajit-shopify-challenge-22.herokuapp.com/items/2",
+					"protocol": "https",
+					"host": [
+						"satrajit-shopify-challenge-22",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"items",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "warehouse items get test",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "items post test",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"warehouse\": 1,\r\n    \"name\": \"potato\",\r\n    \"price\": \"3.4\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://satrajit-shopify-challenge-22.herokuapp.com/items",
+					"protocol": "https",
+					"host": [
+						"satrajit-shopify-challenge-22",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "warehouses post test",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Test warehouse\",\r\n    \"address\": \"3 Test Street, Toronto\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://satrajit-shopify-challenge-22.herokuapp.com/warehouses",
+					"protocol": "https",
+					"host": [
+						"satrajit-shopify-challenge-22",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"warehouses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "item put test",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"warehouse\": \"2\",\r\n    \"name\": \"carrot\",\r\n    \"price\": \"12\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://satrajit-shopify-challenge-22.herokuapp.com/items/3",
+					"protocol": "https",
+					"host": [
+						"satrajit-shopify-challenge-22",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"items",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "warehouse put test",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Test warehouse\",\r\n    \"address\": \"4 Test Street, Toronto\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://satrajit-shopify-challenge-22.herokuapp.com/warehouses/2",
+					"protocol": "https",
+					"host": [
+						"satrajit-shopify-challenge-22",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"warehouses",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "items delete test",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://satrajit-shopify-challenge-22.herokuapp.com/items/2",
+					"protocol": "https",
+					"host": [
+						"satrajit-shopify-challenge-22",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"items",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "warehouses delete test",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://satrajit-shopify-challenge-22.herokuapp.com/warehouses/2",
+					"protocol": "https",
+					"host": [
+						"satrajit-shopify-challenge-22",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"warehouses",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

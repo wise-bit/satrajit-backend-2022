@@ -44,4 +44,31 @@ This is an Express.js server application. It can be run by executing `npm run st
 
 ### POST endpoints
 
-- 
+- `/items`: Create a new item
+
+
+*Sample request body*
+```json
+{
+    "name": "Potato warehouse",
+    "address": "134-34 street, Toronto, Canada"
+}
+```
+
+- `/warehouses`: Create a new warehouse
+
+*Sample request body*
+```json
+{
+    "name": "Potato warehouse",
+    "address": "134-34 street, Toronto, Canada"
+}
+```
+
+```bash
+curl --request GET 'https://satrajit-shopify-challenge-22.herokuapp.com/items'
+```
+
+```bash
+
+```

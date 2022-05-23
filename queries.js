@@ -147,7 +147,7 @@ const updateWarehouse = (req, res) => {
   const { name, address } = req.body;
 
   const sql =
-    'update items\n' +
+    'update warehouses\n' +
     'set name = $1, address = $2\n' +
     'where id = $3\n' +
     'returning id as itemid';
