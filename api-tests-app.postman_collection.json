@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "330873b0-ca62-4dac-96cf-c2e7c7ff7586",
-		"name": "api-tests-shopify-app-fall-2022",
+		"name": "api-tests-app",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "11288342"
 	},
