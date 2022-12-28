@@ -1,4 +1,4 @@
-# Shopify Backend Challenge 2022
+# Backend Challenge 2022
 
 [_By Satrajit Chatterjee_](https://www.satrajit.ca)
 

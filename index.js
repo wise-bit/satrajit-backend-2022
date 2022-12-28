@@ -22,9 +22,9 @@ app.use(express.urlencoded({ extended: false }));
 
 app.get('/', (_req, res) => {
   res.send(
-    "Satrajit's application for Shopify Backend Developer Intern. \n" +
-      'Server information available in README.md. \n' +
-      '(Find out more about me at satrajit.ca)'
+    "Satrajit's application. \n" +
+    'Server information available in README.md. \n' +
+    '(Find out more about me at satrajit.ca)'
   );
 });
 
